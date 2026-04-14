@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { GradientButton } from "@/app/components/GradientButton";
 
 const regions = [
   "Afrique de l'Ouest",
@@ -15,10 +16,10 @@ const regions = [
 ];
 
 const regimes = [
-  { id: "omnivore", label: "🍖 Tout manger" },
-  { id: "vegetarien", label: "🥗 Végétarien" },
-  { id: "halal", label: "☪️ Halal" },
-  { id: "sans-gluten", label: "🌾 Sans gluten" },
+  { id: "omnivore", label: "Tout manger", emoji: "🍖" },
+  { id: "vegetarien", label: "Végétarien", emoji: "🥗" },
+  { id: "halal", label: "Halal", emoji: "☪️" },
+  { id: "sans-gluten", label: "Sans gluten", emoji: "🌾" },
 ];
 
 export default function Preferences() {
@@ -40,100 +41,109 @@ export default function Preferences() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-lg flex flex-col gap-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold">Personnalise ton plan</h1>
+    <main className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      <div className="max-w-lg mx-auto px-4 py-12">
+        {/* Header avec décoration */}
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-2xl mb-4">
+            <span className="text-3xl">🍽️</span>
+          </div>
+          <h1 className="text-3xl font-bold font-serif bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
+            Personnalise ton plan
+          </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-2">
-            Dis-nous qui tu es, on fait le reste.
+            Dis-nous qui tu es, on fait le reste
           </p>
         </div>
 
-        {/* Région */}
-        <div className="flex flex-col gap-2">
-          <label className="font-semibold">📍 Ta région</label>
-          <select
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-            className="border border-gray-300 dark:border-gray-700 rounded-xl px-4 py-3 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500"
-          >
-            <option value="">Sélectionne ta région</option>
-            {regions.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Nombre de personnes */}
-        <div className="flex flex-col gap-2">
-          <label className="font-semibold">👥 Nombre de personnes</label>
-          <div className="flex gap-3">
-            {[1, 2, 3, 4].map((n) => (
-              <button
-                key={n}
-                onClick={() => setPersonnes(n)}
-                className={`flex-1 py-3 rounded-xl border font-semibold transition-colors ${
-                  personnes === n
-                    ? "bg-orange-500 text-white border-orange-500"
-                    : "border-gray-300 dark:border-gray-700 hover:border-orange-400"
-                }`}
-              >
-                {n === 4 ? "4+" : n}
-              </button>
-            ))}
+        <div className="space-y-6">
+          {/* Région */}
+          <div className="group">
+            <label className="block font-semibold mb-2 text-gray-700 dark:text-gray-300">
+              📍 Ta région
+            </label>
+            <select
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+            >
+              <option value="">Sélectionne ta région</option>
+              {regions.map((r) => (
+                <option key={r} value={r}>{r}</option>
+              ))}
+            </select>
           </div>
-        </div>
 
-        {/* Budget */}
-        <div className="flex flex-col gap-2">
-          <label className="font-semibold">
-            💰 Budget semaine —{" "}
-            <span className="text-orange-500">{budget}€</span>
-          </label>
-          <input
-            type="range"
-            min={20}
-            max={200}
-            step={5}
-            value={budget}
-            onChange={(e) => setBudget(Number(e.target.value))}
-            className="accent-orange-500"
-          />
-          <div className="flex justify-between text-sm text-gray-400">
-            <span>20€</span>
-            <span>200€</span>
+          {/* Nombre personnes - redesign avec cartes */}
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700 dark:text-gray-300">
+              👥 Nombre de personnes
+            </label>
+            <div className="flex gap-3">
+              {[1, 2, 3, 4].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setPersonnes(n)}
+                  className={`cursor-pointer flex-1 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                    personnes === n
+                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25 scale-105"
+                      : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:border-orange-400 hover:scale-105"
+                  }`}
+                >
+                  {n === 4 ? "4+" : n}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Régime */}
-        <div className="flex flex-col gap-2">
-          <label className="font-semibold">🥗 Régime alimentaire</label>
-          <div className="grid grid-cols-2 gap-3">
-            {regimes.map((r) => (
-              <button
-                key={r.id}
-                onClick={() => setRegime(r.id)}
-                className={`py-3 px-4 rounded-xl border font-medium transition-colors ${
-                  regime === r.id
-                    ? "bg-orange-500 text-white border-orange-500"
-                    : "border-gray-300 dark:border-gray-700 hover:border-orange-400"
-                }`}
-              >
-                {r.label}
-              </button>
-            ))}
+          {/* Budget avec visual */}
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700 dark:text-gray-300">
+              💰 Budget semaine — <span className="text-orange-500 text-xl">{budget}€</span>
+            </label>
+            <input
+              type="range"
+              min={20}
+              max={200}
+              step={5}
+              value={budget}
+              onChange={(e) => setBudget(Number(e.target.value))}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+            />
+            <div className="flex justify-between text-sm text-gray-400 mt-1">
+              <span>Économique</span>
+              <span>Confort</span>
+              <span>Gourmet</span>
+            </div>
           </div>
-        </div>
 
-        {/* Bouton */}
-        <button
-          onClick={handleSubmit}
-          className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-full transition-colors text-lg"
-        >
-          Générer mon plan →
-        </button>
+          {/* Régime */}
+          <div>
+            <label className="block font-semibold mb-2 text-gray-700 dark:text-gray-300">
+              🥗 Régime alimentaire
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              {regimes.map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => setRegime(r.id)}
+                  className={`cursor-pointer py-3 px-4 rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2 ${
+                    regime === r.id
+                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25 scale-105"
+                      : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:border-orange-400"
+                  }`}
+                >
+                  <span>{r.emoji}</span>
+                  <span>{r.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <GradientButton onClick={handleSubmit} className="w-full mt-4 cursor-pointer">
+            Générer mon plan →
+          </GradientButton>
+        </div>
       </div>
     </main>
   );
