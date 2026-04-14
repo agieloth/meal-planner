@@ -4,8 +4,17 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
+import { useRouter } from "next/navigation";
 
-const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+const jours = [
+  "lundi",
+  "mardi",
+  "mercredi",
+  "jeudi",
+  "vendredi",
+  "samedi",
+  "dimanche",
+];
 const repas = ["petit_dejeuner", "dejeuner", "diner"];
 const repasLabels: Record<string, string> = {
   petit_dejeuner: "🌅 Petit déjeuner",
@@ -17,6 +26,7 @@ type Repas = { nom: string; temps: string };
 type Plan = Record<string, Record<string, Repas>>;
 
 function PlanContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [loading, setLoading] = useState(true);
@@ -119,12 +129,15 @@ function PlanContent() {
       </div>
 
       {/* Bouton liste courses */}
-      <Link
-        href="/shopping-list"
+      <button
+        onClick={() => {
+          localStorage.setItem("mealroots-plan", JSON.stringify(plan));
+          router.push("/shopping-list");
+        }}
         className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 rounded-full transition-colors text-lg text-center"
       >
         Voir ma liste de courses →
-      </Link>
+      </button>
     </main>
   );
 }
