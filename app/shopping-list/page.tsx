@@ -143,16 +143,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GradientButton } from "@/app/components/GradientButton";
 import { AnimatedProgress } from "@/app/components/AnimatedProgress";
+import { FadeIn } from "@/app/components/FadeIn";
 
 type Article = { nom: string; quantite: string };
 type Courses = Record<string, Article[]>;
 
 const categoryConfig: Record<string, { icon: string; color: string }> = {
   "Viandes & Poissons": { icon: "🥩", color: "bg-red-50 dark:bg-red-950/20" },
-  "Légumes": { icon: "🥦", color: "bg-green-50 dark:bg-green-950/20" },
+  "Légumes & Fruits": { icon: "🥦", color: "bg-green-50 dark:bg-green-950/20" },
   "Féculents": { icon: "🌾", color: "bg-amber-50 dark:bg-amber-950/20" },
   "Épices & Condiments": { icon: "🧴", color: "bg-purple-50 dark:bg-purple-950/20" },
-  "Autres": { icon: "🛒", color: "bg-gray-50 dark:bg-gray-900" },
+  "Autres": { icon: "🛒", color: "bg-gray-100 dark:bg-gray-800" },
 };
 
 export default function ShoppingList() {
@@ -215,79 +216,83 @@ export default function ShoppingList() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-orange-50 to-white dark:from-gray-950 dark:to-gray-900">
       <div className="max-w-2xl mx-auto px-4 py-10 space-y-8">
-        {/* Header avec progression */}
-        <div className="text-center space-y-3">
-          <h1 className="text-3xl font-serif font-bold">📝 Ta liste de courses</h1>
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <span>{checkedCount} / {totalItems} articles</span>
-            <span>{Math.round(progress)}%</span>
-          </div>
-          <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 rounded-full"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
 
-        {/* Catégories */}
-        <div className="space-y-6">
-          {courses &&
-            Object.entries(courses).map(([categorie, articles]) => {
-              const config = categoryConfig[categorie] || { icon: "🛒", color: "bg-gray-50" };
-              return (
-                <div key={categorie} className={`rounded-2xl p-4 ${config.color}`}>
-                  <h2 className="font-bold text-lg mb-3 flex items-center gap-2">
-                    <span className="text-2xl">{config.icon}</span>
-                    <span>{categorie}</span>
-                    <span className="text-sm font-normal text-gray-400">({articles.length})</span>
-                  </h2>
-                  <div className="space-y-2">
-                    {articles.map((article, i) => {
-                      const key = `${categorie}-${i}`;
-                      return (
-                        <button
-                          key={key}
-                          onClick={() => toggleCheck(key)}
-                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 ${
-                            checked[key]
-                              ? "bg-white/50 dark:bg-gray-900/50 line-through text-gray-400"
-                              : "bg-white dark:bg-gray-900 hover:shadow-md"
-                          }`}
-                        >
-                          <span className="flex items-center gap-3">
-                            <div
-                              className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
+        <FadeIn delay={0}>
+          <div className="text-center space-y-3">
+            <h1 className="text-3xl font-serif font-bold">📝 Ta liste de courses</h1>
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <span>{checkedCount} / {totalItems} articles</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+            <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-300 rounded-full"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <div className="space-y-6">
+            {courses &&
+              Object.entries(courses).map(([categorie, articles]) => {
+                const config = categoryConfig[categorie] || { icon: "🛒", color: "bg-gray-50" };
+                return (
+                  <div key={categorie} className={`rounded-2xl p-4 ${config.color}`}>
+                    <h2 className="font-bold text-lg mb-3 flex items-center gap-2 text-gray-900 dark:text-white">
+                      <span className="text-2xl">{config.icon}</span>
+                      <span>{categorie}</span>
+                      <span className="text-sm font-normal text-gray-400">({articles.length})</span>
+                    </h2>
+                    <div className="space-y-2">
+                      {articles.map((article, i) => {
+                        const key = `${categorie}-${i}`;
+                        return (
+                          <button
+                            key={key}
+                            onClick={() => toggleCheck(key)}
+                            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 ${
+                              checked[key]
+                                ? "bg-white/50 dark:bg-gray-900/50 line-through text-gray-400"
+                                : "bg-white dark:bg-gray-900 hover:shadow-md"
+                            }`}
+                          >
+                            <span className="flex items-center gap-3">
+                              <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors ${
                                 checked[key]
                                   ? "bg-orange-500 border-orange-500"
                                   : "border-gray-300 dark:border-gray-600"
-                              }`}
-                            >
-                              {checked[key] && <span className="text-white text-xs">✓</span>}
-                            </div>
-                            <span>{article.nom}</span>
-                          </span>
-                          <span className="text-sm text-orange-500 font-medium">
-                            {article.quantite}
-                          </span>
-                        </button>
-                      );
-                    })}
+                              }`}>
+                                {checked[key] && <span className="text-white text-xs">✓</span>}
+                              </div>
+                              <span>{article.nom}</span>
+                            </span>
+                            <span className="text-sm text-orange-500 font-medium">
+                              {article.quantite}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-        </div>
+                );
+              })}
+          </div>
+        </FadeIn>
 
-        <GradientButton
-          onClick={() => {
-            localStorage.removeItem("mealroots-plan");
-            router.push("/preferences");
-          }}
-          className="w-full cursor-pointer"
-        >
-          🍽️ Nouveau plan →
-        </GradientButton>
+        <FadeIn delay={0.2}>
+          <GradientButton
+            onClick={() => {
+              localStorage.removeItem("mealroots-plan");
+              router.push("/preferences");
+            }}
+            className="w-full cursor-pointer"
+          >
+            🍽️ Nouveau plan →
+          </GradientButton>
+        </FadeIn>
+
       </div>
     </main>
   );

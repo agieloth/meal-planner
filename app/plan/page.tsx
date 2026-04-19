@@ -160,6 +160,7 @@ import { Suspense } from "react";
 import { GradientButton } from "@/app/components/GradientButton";
 import { AnimatedProgress } from "@/app/components/AnimatedProgress";
 import { Card } from "@/app/components/Card";
+import { FadeIn } from "@/app/components/FadeIn";
 
 const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
 const repas = ["petit_dejeuner", "dejeuner", "diner"];
@@ -233,74 +234,80 @@ function PlanContent() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-orange-50 to-white dark:from-gray-950 dark:to-gray-900">
       <div className="max-w-2xl mx-auto px-4 py-10 space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 bg-orange-100 dark:bg-orange-900/30 px-4 py-1 rounded-full">
-            <span className="text-orange-500">✨</span>
-            <span className="text-sm font-medium text-orange-600 dark:text-orange-400">
-              Ton plan personnalisé
-            </span>
+        
+        <FadeIn delay={0}>
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-2 bg-orange-100 dark:bg-orange-900/30 px-4 py-1 rounded-full">
+              <span className="text-orange-500">✨</span>
+              <span className="text-sm font-medium text-orange-600 dark:text-orange-400">
+                Ton plan personnalisé
+              </span>
+            </div>
+            <h1 className="text-3xl font-serif font-bold">Menu de la semaine</h1>
+            <p className="text-gray-500 dark:text-gray-400">
+              {region} · {personnes} pers · {budget}€
+            </p>
           </div>
-          <h1 className="text-3xl font-serif font-bold">Menu de la semaine</h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            {region} · {personnes} pers · {budget}€
-          </p>
-        </div>
+        </FadeIn>
 
-        {/* Jours - version améliorée */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {jours.map((jour) => (
-            <button
-              key={jour}
-              onClick={() => setJourActif(jour)}
-              className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold capitalize whitespace-nowrap transition-all duration-200 ${
-                jourActif === jour
-                  ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md shadow-orange-500/25"
-                  : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:border-orange-400"
-              }`}
-            >
-              {jour}
-            </button>
-          ))}
-        </div>
+        <FadeIn delay={0.1}>
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {jours.map((jour) => (
+              <button
+                key={jour}
+                onClick={() => setJourActif(jour)}
+                className={`cursor-pointer px-5 py-2 rounded-full text-sm font-semibold capitalize whitespace-nowrap transition-all duration-200 ${
+                  jourActif === jour
+                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md shadow-orange-500/25"
+                    : "bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 hover:border-orange-400"
+                }`}
+              >
+                {jour}
+              </button>
+            ))}
+          </div>
+        </FadeIn>
 
-        {/* Repas du jour */}
-        <div className="space-y-4">
-          {repas.map((r) => {
-            const repasData = plan?.[jourActif]?.[r];
-            return (
-              <Card key={r} variant="meal">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                      <span>{repasLabels[r].emoji}</span>
-                      <span>{repasLabels[r].label}</span>
-                    </span>
-                    <h3 className="text-lg font-semibold">{repasData?.nom}</h3>
-                    <div className="flex items-center gap-2 text-sm text-orange-500">
-                      <span>⏱️</span>
-                      <span>{repasData?.temps}</span>
+        <FadeIn delay={0.2}>
+          <div className="space-y-4">
+            {repas.map((r) => {
+              const repasData = plan?.[jourActif]?.[r];
+              return (
+                <Card key={r} variant="meal">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                        <span>{repasLabels[r].emoji}</span>
+                        <span>{repasLabels[r].label}</span>
+                      </span>
+                      <h3 className="text-lg font-semibold">{repasData?.nom}</h3>
+                      <div className="flex items-center gap-2 text-sm text-orange-500">
+                        <span>⏱️</span>
+                        <span>{repasData?.temps}</span>
+                      </div>
+                    </div>
+                    <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-2xl">
+                      {r === "petit_dejeuner" ? "🍳" : r === "dejeuner" ? "🍲" : "🍷"}
                     </div>
                   </div>
-                  <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-2xl">
-                    {r === "petit_dejeuner" ? "🍳" : r === "dejeuner" ? "🍲" : "🍷"}
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
+                </Card>
+              );
+            })}
+          </div>
+        </FadeIn>
 
-        {/* Bouton */}
-        <GradientButton
-          onClick={() => {
-            localStorage.setItem("mealroots-plan", JSON.stringify(plan));
-            router.push("/shopping-list");
-          }}
-          className="w-full cursor-pointer"
-        >
-          Voir ma liste de courses →
-        </GradientButton>
+        <FadeIn delay={0.3}>
+          <GradientButton
+            onClick={() => {
+              localStorage.setItem("mealroots-plan", JSON.stringify(plan));
+              router.push("/shopping-list");
+            }}
+            className="w-full cursor-pointer"
+          >
+            Voir ma liste de courses →
+          </GradientButton>
+        </FadeIn>
+
       </div>
     </main>
   );

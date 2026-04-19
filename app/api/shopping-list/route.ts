@@ -14,7 +14,7 @@ Format exact :
   "Viandes & Poissons": [
     { "nom": "Poulet", "quantite": "500g" }
   ],
-  "Légumes": [
+  "Légumes & Fruits": [
     { "nom": "Tomates", "quantite": "1kg" }
   ],
   "Féculents": [
