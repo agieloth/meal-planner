@@ -149,11 +149,11 @@ type Article = { nom: string; quantite: string };
 type Courses = Record<string, Article[]>;
 
 const categoryConfig: Record<string, { icon: string; color: string }> = {
-  "Viandes & Poissons": { icon: "🥩", color: "bg-red-50 dark:bg-red-950/20" },
-  "Légumes & Fruits": { icon: "🥦", color: "bg-green-50 dark:bg-green-950/20" },
-  "Féculents": { icon: "🌾", color: "bg-amber-50 dark:bg-amber-950/20" },
-  "Épices & Condiments": { icon: "🧴", color: "bg-purple-50 dark:bg-purple-950/20" },
-  "Autres": { icon: "🛒", color: "bg-gray-100 dark:bg-gray-800" },
+  "Viandes & Poissons": { icon: "🥩", color: "backdrop-blur-xl bg-white/5 border border-white/10" },
+  "Légumes & Fruits": { icon: "🥦", color: "backdrop-blur-xl bg-white/5 border border-white/10" },
+  "Féculents": { icon: "🌾", color: "backdrop-blur-xl bg-white/5 border border-white/10" },
+  "Épices & Condiments": { icon: "🧴", color: "backdrop-blur-xl bg-white/5 border border-white/10" },
+  "Autres": { icon: "🛒", color: "backdrop-blur-xl bg-white/5 border border-white/10" },
 };
 
 export default function ShoppingList() {
@@ -214,7 +214,7 @@ export default function ShoppingList() {
   const progress = totalItems ? (checkedCount / totalItems) * 100 : 0;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-orange-50 to-white dark:from-gray-950 dark:to-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-orange-950 via-gray-950 to-amber-950">
       <div className="max-w-2xl mx-auto px-4 py-10 space-y-8">
 
         <FadeIn delay={0}>
@@ -240,7 +240,7 @@ export default function ShoppingList() {
                 const config = categoryConfig[categorie] || { icon: "🛒", color: "bg-gray-50" };
                 return (
                   <div key={categorie} className={`rounded-2xl p-4 ${config.color}`}>
-                    <h2 className="font-bold text-lg mb-3 flex items-center gap-2 text-gray-900 dark:text-white">
+                    <h2 className="font-bold text-lg mb-3 flex items-center gap-2 text-white">
                       <span className="text-2xl">{config.icon}</span>
                       <span>{categorie}</span>
                       <span className="text-sm font-normal text-gray-400">({articles.length})</span>
@@ -266,7 +266,7 @@ export default function ShoppingList() {
                               }`}>
                                 {checked[key] && <span className="text-white text-xs">✓</span>}
                               </div>
-                              <span>{article.nom}</span>
+                              <span className="text-white">{article.nom}</span>
                             </span>
                             <span className="text-sm text-orange-500 font-medium">
                               {article.quantite}

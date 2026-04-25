@@ -232,7 +232,7 @@ function PlanContent() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-orange-50 to-white dark:from-gray-950 dark:to-gray-900">
+    <main className="min-h-screen bg-gradient-to-br from-orange-950 via-gray-950 to-amber-950">
       <div className="max-w-2xl mx-auto px-4 py-10 space-y-8">
         
         <FadeIn delay={0}>
@@ -273,7 +273,7 @@ function PlanContent() {
             {repas.map((r) => {
               const repasData = plan?.[jourActif]?.[r];
               return (
-                <Card key={r} variant="meal">
+                <Card key={r} variant="glass">
                   <div className="flex items-start justify-between">
                     <div className="space-y-1">
                       <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
