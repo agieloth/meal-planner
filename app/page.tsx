@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { AnimatedWord } from "@/app/components/AnimatedWord";
 
 export default function Home() {
   const spotlightRef = useRef<HTMLDivElement>(null);
@@ -18,7 +19,6 @@ export default function Home() {
 
   return (
     <main className="relative h-[calc(100vh-73px)] flex flex-col items-center justify-center text-center px-4 overflow-hidden bg-gray-950">
-      
       {/* Gradient animé de fond */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-950 via-gray-950 to-amber-950 animate-pulse" />
@@ -43,11 +43,9 @@ export default function Home() {
         </div>
 
         <h1 className="text-6xl md:text-8xl font-bold text-white leading-none tracking-tight">
-          Mange selon
+          Des plats
           <br />
-          <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
-            tes racines
-          </span>
+          <AnimatedWord />
         </h1>
 
         <p className="text-lg text-gray-400 max-w-lg leading-relaxed">
@@ -62,9 +60,9 @@ export default function Home() {
           >
             Générer mon plan →
           </Link>
-          <button className="border border-gray-700 hover:border-orange-500/50 text-gray-400 hover:text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 backdrop-blur-sm">
+          {/* <button className="border border-gray-700 hover:border-orange-500/50 text-gray-400 hover:text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 backdrop-blur-sm">
             Voir un exemple
-          </button>
+          </button> */}
         </div>
       </div>
 
