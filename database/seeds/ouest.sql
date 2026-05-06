@@ -109,3 +109,88 @@ SELECT id, 'Ail', 3, 'gousses', 'Épices & Condiments' FROM recettes WHERE nom =
 INSERT INTO recette_tags (recette_id, tag_id)
 SELECT r.id, t.id FROM recettes r, tags t
 WHERE r.nom = 'Mafé' AND t.nom IN ('halal', 'dîner', 'familial');
+
+
+-- --------------------------------------------
+-- Petits déjeuners Afrique de l'Ouest
+-- --------------------------------------------
+
+INSERT INTO recettes (nom, region, pays, type_repas, temps_preparation, temps_cuisson, difficulte, portions, description, instructions)
+VALUES (
+  'Bouillie de mil',
+  'Afrique de l''Ouest',
+  'Sénégal, Mali, Burkina Faso, Guinée',
+  'petit déjeuner',
+  5, 20, 'facile', 4,
+  'Porridge chaud traditionnel à base de farine de mil, sucré au sucre ou au miel. Petit déjeuner nourrissant très répandu en Afrique de l''Ouest.',
+  '1. Porter l''eau à ébullition. 2. Diluer la farine de mil dans un peu d''eau froide. 3. Incorporer progressivement dans l''eau bouillante. 4. Remuer sans arrêt 15 minutes. 5. Ajouter sucre et lait selon goût.'
+);
+
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Farine de mil', 200, 'g', 'Féculents' FROM recettes WHERE nom = 'Bouillie de mil';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Eau', 1, 'L', 'Autres' FROM recettes WHERE nom = 'Bouillie de mil';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Sucre', 50, 'g', 'Autres' FROM recettes WHERE nom = 'Bouillie de mil';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Lait', 200, 'ml', 'Autres' FROM recettes WHERE nom = 'Bouillie de mil';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Sel', 1, 'pincée', 'Épices & Condiments' FROM recettes WHERE nom = 'Bouillie de mil';
+
+INSERT INTO recette_tags (recette_id, tag_id)
+SELECT r.id, t.id FROM recettes r, tags t
+WHERE r.nom = 'Bouillie de mil' AND t.nom IN ('végétarien', 'petit déjeuner', 'rapide');
+
+-- --------------------------------------------
+
+INSERT INTO recettes (nom, region, pays, type_repas, temps_preparation, temps_cuisson, difficulte, portions, description, instructions)
+VALUES (
+  'Akara',
+  'Afrique de l''Ouest',
+  'Nigeria, Sénégal, Bénin, Ghana',
+  'petit déjeuner',
+  20, 15, 'moyen', 4,
+  'Beignets croustillants à base de haricots blancs mixés et frits. Appelé Accara au Sénégal. Souvent servi avec une sauce pimentée.',
+  '1. Tremper les haricots blancs une nuit. 2. Les peler et mixer finement. 3. Ajouter oignon, piment et sel. 4. Battre la pâte pour l''aérer. 5. Frire par cuillerées dans l''huile chaude jusqu''à dorure.'
+);
+
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Haricots blancs', 300, 'g', 'Féculents' FROM recettes WHERE nom = 'Akara';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Oignon', 1, 'pièce', 'Légumes & Fruits' FROM recettes WHERE nom = 'Akara';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Piment', 1, 'pièce', 'Épices & Condiments' FROM recettes WHERE nom = 'Akara';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Sel', 1, 'c.à.c', 'Épices & Condiments' FROM recettes WHERE nom = 'Akara';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Huile de friture', 500, 'ml', 'Autres' FROM recettes WHERE nom = 'Akara';
+
+INSERT INTO recette_tags (recette_id, tag_id)
+SELECT r.id, t.id FROM recettes r, tags t
+WHERE r.nom = 'Akara' AND t.nom IN ('végétarien', 'petit déjeuner', 'sans gluten');
+
+-- --------------------------------------------
+
+INSERT INTO recettes (nom, region, pays, type_repas, temps_preparation, temps_cuisson, difficulte, portions, description, instructions)
+VALUES (
+  'Ogi',
+  'Afrique de l''Ouest',
+  'Nigeria, Ghana, Bénin',
+  'petit déjeuner',
+  10, 15, 'facile', 4,
+  'Bouillie fermentée douce à base de maïs ou sorgho. Texture crémeuse et légèrement acidulée. Souvent servi avec du lait et du sucre.',
+  '1. Délayer la pâte de maïs fermentée dans l''eau froide. 2. Porter à ébullition en remuant constamment. 3. Cuire 10 minutes jusqu''à épaississement. 4. Servir chaud avec lait et sucre.'
+);
+
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Farine de maïs fermentée', 200, 'g', 'Féculents' FROM recettes WHERE nom = 'Ogi';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Eau', 800, 'ml', 'Autres' FROM recettes WHERE nom = 'Ogi';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Lait', 200, 'ml', 'Autres' FROM recettes WHERE nom = 'Ogi';
+INSERT INTO ingredients (recette_id, nom, quantite, unite, categorie)
+SELECT id, 'Sucre', 40, 'g', 'Autres' FROM recettes WHERE nom = 'Ogi';
+
+INSERT INTO recette_tags (recette_id, tag_id)
+SELECT r.id, t.id FROM recettes r, tags t
+WHERE r.nom = 'Ogi' AND t.nom IN ('végétarien', 'petit déjeuner', 'rapide', 'sans gluten');

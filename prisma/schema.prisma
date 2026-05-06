@@ -30,7 +30,7 @@ model recettes {
   id                Int            @id @default(autoincrement())
   nom               String         @db.VarChar(255)
   region            String         @db.VarChar(100)
-  pays              String?        @db.VarChar(100)
+  pays              String?        
   type_repas        String         @db.VarChar(50)
   temps_preparation Int?
   temps_cuisson     Int?
